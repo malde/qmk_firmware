@@ -1,6 +1,6 @@
 # Personal keymap for the Think 6.5 with compatible soldered PCB
 
-The layout is US ISO with some small personal tweaks.
+The layout is US ISO with left shift taken from ANSI with some small personal tweaks.
 
 The LED cycling code is based on code posted to the Gray Studio Discord by `MudkipMao` on Nov 22nd 2019. Thanks!
 
