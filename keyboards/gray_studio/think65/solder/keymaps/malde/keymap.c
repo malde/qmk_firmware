@@ -195,72 +195,59 @@ bool shifted(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case CYC_LED:
-            if (record->event.pressed) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case CYC_LED:
                 cycle_led_state();
                 apply_led_state();
                 eeconfig_update_user(user_config.raw);
-            }
-            break;
-        case TOG_ESC:
-            if (record->event.pressed) {
+                return false;
+            case TOG_ESC:
                 toggle_led_state(THINK65_LED_ESC_RANGE_BIT);
                 apply_led_state();
                 eeconfig_update_user(user_config.raw);
-            }
-            break;
-        case TOG_BDG:
-            if (record->event.pressed) {
+                return false;
+            case TOG_BDG:
                 toggle_led_state(THINK65_LED_BADGE_RANGE_BIT);
                 apply_led_state();
                 eeconfig_update_user(user_config.raw);
-            }
-            break;
-        case TOG_UGL:
-            if (record->event.pressed) {
+                return false;
+            case TOG_UGL:
                 toggle_led_state(THINK65_LED_UNDERGLOW_RANGE_BIT);
                 apply_led_state();
                 eeconfig_update_user(user_config.raw);
-            }
-            break;
-        case AUML:
-            if (record->event.pressed) {
+                return false;
+            case AUML:
                 if(shifted()) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("a"));
-                } else {
+                }
+                else {
                     SEND_STRING(SS_RALT("u") "a");
                 }
-            }
-            break;
-        case UUML:
-            if (record->event.pressed) {
+                return false;
+            case UUML:
                 if(shifted()) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("u"));
-                } else {
+                }
+                else {
                     SEND_STRING(SS_RALT("u") "u");
                 }
-            }
-            break;
-        case OUML:
-            if (record->event.pressed) {
+                return false;
+            case OUML:
                 if(shifted()) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("o"));
-                } else {
+                }
+                else {
                     SEND_STRING(SS_RALT("u") "o");
                 }
-            }
-            break;
-        case SZ:
-            if (record->event.pressed) {
+                return false;
+            case SZ:
                 SEND_STRING(SS_RALT("s"));
-            }
-            break;
-        default:
-            break;
+                return false;
+        }
     }
     return true;
 }
