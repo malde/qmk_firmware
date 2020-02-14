@@ -227,27 +227,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case AUML:
             if (record->event.pressed) {
                 if(shifted()) {
-                    SEND_STRING("\"A");
+                    clear_keyboard();
+                    SEND_STRING(SS_RALT("u") SS_LSFT("a"));
                 } else {
-                    SEND_STRING("\"a");
+                    SEND_STRING(SS_RALT("u") "a");
                 }
             }
             break;
         case UUML:
             if (record->event.pressed) {
                 if(shifted()) {
-                    SEND_STRING("\"U");
+                    clear_keyboard();
+                    SEND_STRING(SS_RALT("u") SS_LSFT("u"));
                 } else {
-                    SEND_STRING("\"u");
+                    SEND_STRING(SS_RALT("u") "u");
                 }
             }
             break;
         case OUML:
             if (record->event.pressed) {
                 if(shifted()) {
-                    SEND_STRING("\"O");
+                    clear_keyboard();
+                    SEND_STRING(SS_RALT("u") SS_LSFT("o"));
                 } else {
-                    SEND_STRING("\"o");
+                    SEND_STRING(SS_RALT("u") "o");
                 }
             }
             break;
