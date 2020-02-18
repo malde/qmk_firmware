@@ -54,6 +54,9 @@
 #define THINK65_LED_BADGE_RANGE_BIT           1
 #define THINK65_LED_UNDERGLOW_RANGE_BIT       2
 
+// Define a mask for shift modifiers
+#define MODS_SHIFT_MASK (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))
+
 // Setup some keycodes to control cycling and range toggling
 enum malde_keycodes {
     CYC_LED = SAFE_RANGE,
@@ -190,12 +193,10 @@ void keyboard_post_init_user(void) {
     }
 }
 
-bool shifted(void) {
-    return get_mods() & (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT));
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
+    if (record -> event.pressed) {
+        bool shifted = get_mods() & MODS_SHIFT_MASK;
+
         switch (keycode) {
             case CYC_LED:
                 cycle_led_state();
@@ -218,7 +219,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 eeconfig_update_user(user_config.raw);
                 return false;
             case AUML:
-                if(shifted()) {
+                if(shifted) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("a"));
                 }
@@ -227,7 +228,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             case UUML:
-                if(shifted()) {
+                if(shifted) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("u"));
                 }
@@ -236,7 +237,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             case OUML:
-                if(shifted()) {
+                if(shifted) {
                     clear_keyboard();
                     SEND_STRING(SS_RALT("u") SS_LSFT("o"));
                 }
@@ -258,9 +259,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┬───┐
      * │Esc│ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │ 0 │ - │ = │ Backsp│Del│
      * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
-     * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │ [ │ ] │     │ \ │
+     * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │ [ │ ] │     │ § │
      * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐ Ent├───┘
-     * │ L1   │ A │ S │ D │ F │ G │ H │ J │ K │ L │ ; │ ' │ # │    │   
+     * │ L1   │ A │ S │ D │ F │ G │ H │ J │ K │ L │ ; │ ' │ \ │    │   
      * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴┬───┤   
      * │ Shift  │ Z │ X │ C │ V │ B │ N │ M │ , │ . │ / │ Shift│ ↑ │   
      * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬─┬───┼───┼───┐
