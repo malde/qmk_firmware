@@ -54,19 +54,12 @@
 #define THINK65_LED_BADGE_RANGE_BIT           1
 #define THINK65_LED_UNDERGLOW_RANGE_BIT       2
 
-// Define a mask for shift modifiers
-#define MODS_SHIFT_MASK (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))
-
 // Setup some keycodes to control cycling and range toggling
 enum malde_keycodes {
     CYC_LED = SAFE_RANGE,
     TOG_ESC,
     TOG_BDG,
-    TOG_UGL,
-    AUML,
-    UUML,
-    OUML,
-    SZ
+    TOG_UGL
 };
 // setup the user EEPROM space we need
 typedef union {
@@ -195,8 +188,6 @@ void keyboard_post_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record -> event.pressed) {
-        bool shifted = get_mods() & MODS_SHIFT_MASK;
-
         switch (keycode) {
             case CYC_LED:
                 cycle_led_state();
@@ -217,36 +208,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 toggle_led_state(THINK65_LED_UNDERGLOW_RANGE_BIT);
                 apply_led_state();
                 eeconfig_update_user(user_config.raw);
-                return false;
-            case AUML:
-                if(shifted) {
-                    clear_keyboard();
-                    SEND_STRING(SS_RALT("u") SS_LSFT("a"));
-                }
-                else {
-                    SEND_STRING(SS_RALT("u") "a");
-                }
-                return false;
-            case UUML:
-                if(shifted) {
-                    clear_keyboard();
-                    SEND_STRING(SS_RALT("u") SS_LSFT("u"));
-                }
-                else {
-                    SEND_STRING(SS_RALT("u") "u");
-                }
-                return false;
-            case OUML:
-                if(shifted) {
-                    clear_keyboard();
-                    SEND_STRING(SS_RALT("u") SS_LSFT("o"));
-                }
-                else {
-                    SEND_STRING(SS_RALT("u") "o");
-                }
-                return false;
-            case SZ:
-                SEND_STRING(SS_RALT("s"));
                 return false;
         }
     }
@@ -279,9 +240,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┬───┐
      * │ ` │ F1│ F2│ F3│ F4│ F5│ F6│ F7│ F8│ F9│F10│F11│F12│ Del   │VO+│
      * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┼───┤
-     * │     │   │   │   │   │   │   │ Ü │   │ Ö │   │ ↑ │   │     │VO-│
+     * │     │   │   │   │   │   │   │   │   │   │   │ ↑ │   │     │VO-│
      * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┐PLAY├───┘
-     * │      │ Ä │ ß │   │   │   │   │   │   │   │ ← │ → │   │    │
+     * │      │   │   │   │   │   │   │   │   │   │ ← │ → │   │    │
      * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┴┬───┤
      * │        │   │   │   │   │   │   │   │   │   │ ↓ │      │   │
      * ├────┬───┴┬──┴─┬─┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬─┬───┼───┼───┐
@@ -289,8 +250,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * └────┴────┴────┴────────────────────────┴────┴────┘ └───┴───┴───┘
      */
         KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,  KC_VOLU,
-        _______, _______, _______, _______, _______, _______, _______, UUML,    _______, OUML,    _______, KC_UP,   _______,          KC_VOLD,
-        _______, AUML,    SZ,      _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_RGHT, _______, KC_MPLY,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_UP,   _______,          KC_VOLD,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_RGHT, _______, KC_MPLY,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_DOWN, _______, _______,
         MO(2),   _______, _______,                     _______,                          _______, _______,          _______, _______, _______
     ),
