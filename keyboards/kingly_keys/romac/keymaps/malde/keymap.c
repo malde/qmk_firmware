@@ -4,22 +4,22 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-	[_BASE] = LAYOUT(
-	/*
+    [_BASE] = LAYOUT(
+    /*
      * ┌────┬────┬────┐
-     * │Prev│Play│Next│ 
+     * │Prev│Play│Next│
      * ├────┼────┼────┤
      * │Home│Prnt│End │
      * ├────┼────┼────┤
-     * │PgUp│ Up │PgDn│
+     * │PgUp│ Up │PgDn│
      * ├────┼────┼────┤
-     * │Left│Down│Rght│ 
+     * │Left│Down│Rght│
      * └────┴────┴────┘
      */
-	    KC_MPRV, KC_MPLY, KC_MNXT,
-	    KC_HOME, KC_PSCR, KC_END,
-	    KC_PGUP, KC_UP,   KC_PGDN,
-	    KC_LEFT, KC_DOWN, KC_RGHT
+        KC_MPRV, KC_MPLY, KC_MNXT,
+        KC_HOME, KC_PSCR, KC_END,
+        KC_PGUP, KC_UP,   KC_PGDN,
+        KC_LEFT, KC_DOWN, KC_RGHT
     )
 
 };
