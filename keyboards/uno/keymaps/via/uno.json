@@ -1,0 +1,12 @@
+{
+  "name": "Uno",
+  "vendorId": "0xFEED",
+  "productId": "0xACC8",
+  "lighting": "none",
+  "matrix": { "rows": 1, "cols": 1 },
+  "layouts": {
+    "keymap": [
+      ["0,0"]
+    ]
+  }
+}
